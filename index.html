@@ -654,12 +654,36 @@
       if (viewerState.currentSlide < viewerState.whisper.slides.length - 1) {
         viewerState.currentSlide++;
         renderViewer();
+      } else {
+        // Last slide reached - delete the whisper
+        deleteWhisperAfterViewing(viewerState.whisper.id);
       }
     };
     
+    const deleteWhisperAfterViewing = (whisperId) => {
+      const whispers = getWhispers();
+      const updatedWhispers = whispers.filter(w => w.id !== whisperId);
+      saveWhispers(updatedWhispers);
+      
+      // Show a message that it's been deleted
+      document.getElementById('app').innerHTML = `
+        <div class="viewer-container">
+          <div style="max-width: 700px; width: 100%; text-align: center;">
+            <h2 class="viewer-title">This Whisper has vanished</h2>
+            <p style="color: #A08BAA; font-size: 16px; margin-bottom: 32px;">
+              Like all whispers, it can only be heard once.
+            </p>
+            <button class="btn btn-secondary" onclick="router.navigate('/')">
+              Return Home
+            </button>
+          </div>
+        </div>
+      `;
+    };
+    
     window.resetViewer = () => {
-      viewerState.currentSlide = 0;
-      renderViewer();
+      // Remove reset functionality since whisper auto-deletes
+      router.navigate('/');
     };
     
     window.copyLink = () => {
