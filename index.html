@@ -608,10 +608,6 @@
       
       document.getElementById('app').innerHTML = `
         <div class="viewer-container">
-          <button class="position-btn left" onclick="router.navigate('/')">
-            ← Exit
-          </button>
-          
           <button class="position-btn right ${copied ? 'copied' : ''}" onclick="copyLink()">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               ${copied ? 
@@ -627,7 +623,7 @@
             
             ${whisper.slides.length === 0 ? 
               '<p style="color: #A08BAA; font-size: 16px;">No slides yet. Add some in the editor.</p>' :
-              `<div class="slide-content" onclick="nextSlide()" style="${currentSlide < whisper.slides.length - 1 ? 'cursor: pointer;' : 'cursor: default;'}">
+              `<div class="slide-content" onclick="nextSlide()" style="cursor: pointer;">
                 <p class="slide-text">${slide.text || '(Empty slide)'}</p>
               </div>`
             }
@@ -639,11 +635,11 @@
             </div>
             
             ${currentSlide < whisper.slides.length - 1 && whisper.slides.length > 0 ?
-              '<p style="margin-top: 24px; color: #A08BAA; font-size: 14px;">Tap to reveal next message</p>' : ''
+              '<p style="margin-top: 24px; color: #A08BAA; font-size: 14px;">Tap to reveal next message · This whisper will vanish after viewing</p>' : ''
             }
             
             ${currentSlide === whisper.slides.length - 1 && whisper.slides.length > 0 ?
-              '<button class="btn btn-secondary" onclick="resetViewer()" style="margin-top: 24px;">Start over</button>' : ''
+              '<p style="margin-top: 24px; color: #A08BAA; font-size: 14px;">Tap once more to complete · This whisper will then vanish forever</p>' : ''
             }
           </div>
         </div>
